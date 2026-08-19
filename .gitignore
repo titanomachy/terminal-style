@@ -1,0 +1,10 @@
+# Nim compiler and documentation output
+nimcache/
+htmldocs/
+
+# Generated test and example executables
+/tests/test_terminal_styles
+/examples/terminal_styles
+
+# Other
+RELEASING.md
