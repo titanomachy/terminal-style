@@ -9,3 +9,6 @@ htmldocs/
 
 # Other
 RELEASING.md
+nimble.develop
+nimble.paths
+nimbledeps
