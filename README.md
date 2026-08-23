@@ -1,10 +1,10 @@
-# terminal_styles
+# TerminalStyles
 
-`terminal_styles` is a dependency-free, pure-Nim library for terminal colors,
+TerminalStyles is a dependency-free, pure-Nim library for terminal colors,
 text attributes, ANSI parsing, and Unicode terminal-cell layout. Importing it
 does not print, query the terminal, or modify global state.
 
-It is the shared styling foundation for `terminal_graphs` and
+`terminal_styles` is the shared styling foundation for `terminal_graphs` and
 `terminal_tables`, but can also be used independently.
 
 Requires Nim 2.0.0 or newer.
@@ -21,6 +21,8 @@ echo bgBrightBlue(brightWhite(" healthy "))
 echo rgb(120, 200, 255, "true color")
 echo onIndexed(235, brightYellow(" warning "))
 ```
+
+![Colors, attributes, indexed colors, and true-color output](docs/assets/colors-and-attributes.png)
 
 `TerminalColor` supports the standard and bright 16-color palette, all 256
 indexed colors, 24-bit RGB values, and three- or six-digit hexadecimal values:
@@ -87,6 +89,8 @@ echo "|", padAnsi(value, 24, alignCenter), "|"
 for line in wrapAnsi(value, 10, wrapWords):
   echo line
 ```
+
+![Cell-aware slicing, padding, and wrapping](docs/assets/terminal-cell-layout.png)
 
 `sliceAnsi`, `truncateAnsi`, and `padAnsi` operate on one display line.
 `wrapAnsi` honors explicit newlines and supports `wrapWords` and
