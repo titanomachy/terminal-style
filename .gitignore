@@ -4,6 +4,7 @@ htmldocs/
 
 # Generated test and example executables
 /tests/test_terminal_styles
+/tests/test_palettes
 /examples/terminal_styles
 
 # Other

@@ -11,6 +11,8 @@ release.
   and terminal-cell-aware text layout.
 - Add standard and bright 16-color, ANSI-256 indexed, 24-bit RGB, and
   three- or six-digit hexadecimal terminal colors.
+- Add an opt-in palette module with ANSI defaults, original dark and light RGB
+  presets, partial custom-palette construction, and a viewable color guide.
 - Add foreground and background helpers, text attributes, and reusable
   composable `TerminalStyle` values.
 - Restore outer formatting after nested content resets its ANSI style, with an

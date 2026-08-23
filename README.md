@@ -11,7 +11,7 @@ Requires Nim 2.0.0 or newer.
 
 ## Colors and attributes
 
-Import the façade to access the complete API:
+Import the façade to access the complete core API:
 
 ```nim
 import terminal_styles
@@ -45,6 +45,32 @@ controls are removed too:
 let decorated = bold("outer ", red("inner"), " outer")
 echo applyStyle(decorated, heading, enabled = false)
 ```
+
+## Curated RGB palettes
+
+Import the opt-in palettes module when you want a coherent set of exact color
+choices instead of selecting individual RGB shades:
+
+```nim
+import terminal_styles/palettes
+
+let colors = defaultDarkPalette
+
+echo foreground(colors.red, "failed")
+echo foreground(colors.blue, "information")
+echo styled(initTerminalStyle(foreground = colors.cyan), "heading")
+```
+
+`ansiPalette` uses terminal-controlled ANSI-16 colors. The original
+`defaultDarkPalette` and `defaultLightPalette` presets provide exact RGB
+values designed against `#101418` and `#F7F8FA` respectively. Palettes are
+ordinary immutable values: importing the module does not select one globally
+or change helpers such as `red()`.
+
+![The sixteen dark and light palette colors with hexadecimal values and reference contrast ratios](docs/assets/color-palettes.svg)
+
+See the [color palette guide](docs/color-palettes.md) for exact values,
+contrast context, custom palettes, and guidance on choosing a preset.
 
 ## ANSI parsing
 
@@ -107,11 +133,15 @@ two-cell interpretation for emoji.
   composition.
 - `terminal_styles/colors` contains colors, attributes, styles, constants, and
   convenience helpers.
+- `terminal_styles/palettes` is an opt-in module containing reusable color
+  palettes and re-exporting the color and style API.
 - `terminal_styles/widths` contains cell measurement, slicing, truncation,
   padding, and wrapping.
-- `terminal_styles` imports and exports all three modules.
+- `terminal_styles` imports and exports ANSI, colors, and widths. Palette
+  preset names remain opt-in.
 
-Most applications should import only `terminal_styles`.
+Most applications should import only `terminal_styles`; import
+`terminal_styles/palettes` when using palette presets.
 
 ## Example
 

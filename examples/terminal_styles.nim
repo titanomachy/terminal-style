@@ -2,15 +2,26 @@
 
 when isMainModule:
   import ../src/terminal_styles
+  import ../src/terminal_styles/palettes
 
   echo bold(brightCyan("Terminal styling"))
   echo red("standard red"), "  ", brightRed("bright red"), "  ",
     bgBlue(white(" white on blue "))
 
-  var palette = "ANSI-256: "
+  var indexedSwatches = "ANSI-256: "
   for index in countup(16, 231, 18):
-    palette.add onIndexed(index, "  ")
-  echo palette
+    indexedSwatches.add onIndexed(index, "  ")
+  echo indexedSwatches
+
+  echo "\nReusable palettes"
+  echo foreground(ansiPalette.red, "ANSI red"), "  ",
+    foreground(defaultDarkPalette.red, "dark-palette red"), "  ",
+    foreground(defaultLightPalette.red, "light-palette red")
+  const companyPalette = initTerminalPalette(
+    red = hexColor("#dc4650"),
+    blue = hexColor("#4682dc")
+  )
+  echo foreground(companyPalette.blue, "custom blue")
 
   let heading = initTerminalStyle(
     foreground = hexColor("#78c8ff"),
