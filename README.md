@@ -1,10 +1,10 @@
-# TerminalStyles
+# TerminalStyle
 
-TerminalStyles is a dependency-free, pure-Nim library for terminal colors,
+TerminalStyle is a dependency-free, pure-Nim library for terminal colors,
 text attributes, ANSI parsing, and Unicode terminal-cell layout. Importing it
 does not print, query the terminal, or modify global state.
 
-`terminal_styles` is the shared styling foundation for `terminal_graphs` and
+`terminal_style` is the shared styling foundation for `terminal_graphs` and
 `terminal_tables`, but can also be used independently.
 
 Requires Nim 2.0.0 or newer.
@@ -14,7 +14,7 @@ Requires Nim 2.0.0 or newer.
 Import the façade to access the complete core API:
 
 ```nim
-import terminal_styles
+import terminal_style
 
 echo red("failed after ", 3, " attempts")
 echo bgBrightBlue(brightWhite(" healthy "))
@@ -52,7 +52,7 @@ Import the opt-in palettes module when you want a coherent set of exact color
 choices instead of selecting individual RGB shades:
 
 ```nim
-import terminal_styles/palettes
+import terminal_style/palettes
 
 let colors = defaultDarkPalette
 
@@ -129,26 +129,26 @@ two-cell interpretation for emoji.
 
 ## Modules
 
-- `terminal_styles/ansi` contains tokenization, stripping, and low-level ANSI
+- `terminal_style/ansi` contains tokenization, stripping, and low-level ANSI
   composition.
-- `terminal_styles/colors` contains colors, attributes, styles, constants, and
+- `terminal_style/colors` contains colors, attributes, styles, constants, and
   convenience helpers.
-- `terminal_styles/palettes` is an opt-in module containing reusable color
+- `terminal_style/palettes` is an opt-in module containing reusable color
   palettes and re-exporting the color and style API.
-- `terminal_styles/widths` contains cell measurement, slicing, truncation,
+- `terminal_style/widths` contains cell measurement, slicing, truncation,
   padding, and wrapping.
-- `terminal_styles` imports and exports ANSI, colors, and widths. Palette
+- `terminal_style` imports and exports ANSI, colors, and widths. Palette
   preset names remain opt-in.
 
-Most applications should import only `terminal_styles`; import
-`terminal_styles/palettes` when using palette presets.
+Most applications should import only `terminal_style`; import
+`terminal_style/palettes` when using palette presets.
 
 ## Example
 
 The finite showcase can be compiled directly while developing:
 
 ```sh
-nim c -r examples/terminal_styles.nim
+nim c -r examples/terminal_style.nim
 ```
 
 ## Development

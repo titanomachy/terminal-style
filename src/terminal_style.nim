@@ -5,7 +5,7 @@
 ##
 ## .. code-block:: nim
 ##
-##   import terminal_styles
+##   import terminal_style
 ##
 ##   let heading = initTerminalStyle(
 ##     foreground = rgbColor(120, 200, 255),
@@ -14,6 +14,6 @@
 ##   echo styled(heading, "Terminal output")
 ##   echo padAnsi(red("ready"), 12, alignCenter)
 
-import terminal_styles/[ansi, colors, widths]
+import terminal_style/[ansi, colors, widths]
 
 export ansi, colors, widths

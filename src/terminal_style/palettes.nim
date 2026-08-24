@@ -7,7 +7,7 @@
 ##
 ## .. code-block:: nim
 ##
-##   import terminal_styles/palettes
+##   import terminal_style/palettes
 ##
 ##   let colors = defaultDarkPalette
 ##   echo foreground(colors.red, "failed")

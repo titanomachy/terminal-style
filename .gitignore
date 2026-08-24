@@ -3,9 +3,9 @@ nimcache/
 htmldocs/
 
 # Generated test and example executables
-/tests/test_terminal_styles
+/tests/test_terminal_style
 /tests/test_palettes
-/examples/terminal_styles
+/examples/terminal_style
 
 # Other
 RELEASING.md

@@ -1,6 +1,6 @@
 import std/unittest
 
-import terminal_styles/palettes
+import terminal_style/palettes
 
 suite "terminal color palettes":
   test "maps the ANSI palette to existing terminal colors":

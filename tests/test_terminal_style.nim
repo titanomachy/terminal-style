@@ -1,6 +1,6 @@
 import std/[sequtils, strutils, unittest]
 
-import terminal_styles
+import terminal_style
 
 suite "ANSI parsing":
   test "tokenizes complete CSI, OSC, and text losslessly":

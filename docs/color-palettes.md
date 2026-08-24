@@ -1,11 +1,11 @@
 # Color palettes
 
-`terminal_styles/palettes` provides coherent, immutable sets of standard and
+`terminal_style/palettes` provides coherent, immutable sets of standard and
 bright colors. It is an opt-in module that re-exports the ordinary color and
 style API, so it can be imported on its own:
 
 ```nim
-import terminal_styles/palettes
+import terminal_style/palettes
 
 let colors = defaultDarkPalette
 
@@ -29,7 +29,7 @@ palette field anywhere a `TerminalColor` is accepted.
 - `defaultDarkPalette` contains exact RGB colors designed against `#101418`.
 - `defaultLightPalette` contains exact RGB colors designed against `#F7F8FA`.
 
-The dark and light palettes are original to TerminalStyles rather than ports
+The dark and light palettes are original to TerminalStyle rather than ports
 of named third-party themes.
 
 ![The sixteen dark and light palette colors with hexadecimal values and reference contrast ratios](assets/color-palettes.svg)

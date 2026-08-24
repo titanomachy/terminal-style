@@ -1,8 +1,8 @@
 ## A finite tour of styling and ANSI-aware layout.
 
 when isMainModule:
-  import ../src/terminal_styles
-  import ../src/terminal_styles/palettes
+  import ../src/terminal_style
+  import ../src/terminal_style/palettes
 
   echo bold(brightCyan("Terminal styling"))
   echo red("standard red"), "  ", brightRed("bright red"), "  ",
