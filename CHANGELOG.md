@@ -4,6 +4,13 @@ This project follows Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-08-24
+
+### Changed
+
+- Rename the repository and Nimble package to the singular
+  `terminal-style`/`terminal_style` names to avoid a Nimble namespace conflict.
+
 ## [0.1.0] - 2026-08-23
 
 ### Added
