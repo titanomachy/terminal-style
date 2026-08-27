@@ -19,8 +19,6 @@ task examples, "Check that all examples compile":
   exec "nim check examples/terminal_style.nim"
 
 task docs, "Generate terminal_style API documentation":
-  exec "nim doc --outdir:htmldocs --path:src src/terminal_style.nim"
-  exec "nim doc --outdir:htmldocs --path:src src/terminal_style/ansi.nim"
-  exec "nim doc --outdir:htmldocs --path:src src/terminal_style/colors.nim"
-  exec "nim doc --outdir:htmldocs --path:src src/terminal_style/palettes.nim"
-  exec "nim doc --outdir:htmldocs --path:src src/terminal_style/widths.nim"
+  exec "nim doc --project --index:on --git.url:https://github.com/titanomachy/terminal-style --git.commit:master --outdir:htmldocs --path:src src/terminal_style.nim"
+  exec "nim doc --index:on --git.url:https://github.com/titanomachy/terminal-style --git.commit:master --outdir:htmldocs --path:src src/terminal_style/palettes.nim"
+  exec "nim buildIndex -o:htmldocs/theindex.html htmldocs"

@@ -1,5 +1,7 @@
 # TerminalStyle
 
+[![Coverage](https://titanomachy.github.io/terminal-style/coverage.svg)](https://titanomachy.github.io/terminal-style/coverage/)
+
 TerminalStyle is a dependency-free, pure-Nim library for terminal colors,
 text attributes, ANSI parsing, and Unicode terminal-cell layout. Importing it
 does not print, query the terminal, or modify global state.
@@ -158,6 +160,9 @@ nimble test
 nimble examples
 nimble docs
 ```
+
+The generated [API documentation](https://titanomachy.github.io/terminal-style/)
+is published by GitHub Actions after every push to `master`.
 
 The example coverage audit is in [`docs/public-api.md`](docs/public-api.md).
 Release history, contribution rules, third-party declarations, and the release

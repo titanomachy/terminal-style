@@ -1,0 +1,81 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build documentation and coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: stable
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install coverage tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes kcov
+
+      - name: Compile coverage test executables
+        run: |
+          mkdir -p build/tests
+          nim c --debugger:native --lineDir:on --path:src \
+            --nimcache:build/nimcache/terminal-style \
+            --out:build/tests/test-terminal-style tests/test_terminal_style.nim
+          nim c --debugger:native --lineDir:on --path:src \
+            --nimcache:build/nimcache/palettes \
+            --out:build/tests/test-palettes tests/test_palettes.nim
+
+      - name: Measure coverage
+        run: |
+          kcov --include-path="$GITHUB_WORKSPACE/src" \
+            build/coverage/terminal-style build/tests/test-terminal-style
+          kcov --include-path="$GITHUB_WORKSPACE/src" \
+            build/coverage/palettes build/tests/test-palettes
+          kcov --merge build/coverage/merged \
+            build/coverage/terminal-style build/coverage/palettes
+
+      - name: Generate documentation and coverage badge
+        run: |
+          nimble docs -y
+          cp htmldocs/terminal_style.html htmldocs/index.html
+          coverage_json="$(find build/coverage/merged -name coverage.json -print -quit)"
+          test -n "$coverage_json"
+          python3 .github/scripts/coverage_badge.py \
+            "$coverage_json" htmldocs/coverage.svg
+          cp -R build/coverage/merged htmldocs/coverage
+          touch htmldocs/.nojekyll
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: htmldocs
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
