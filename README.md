@@ -1,6 +1,6 @@
 # TerminalStyle
 
-[![Coverage](https://titanomachy.github.io/terminal-style/coverage.svg)](https://titanomachy.github.io/terminal-style/coverage/)
+[![Coverage](https://titanomachy.github.io/terminal-style/coverage.svg)](https://github.com/titanomachy/terminal-style/actions/workflows/pages.yml)
 
 TerminalStyle is a dependency-free, pure-Nim library for terminal colors,
 text attributes, ANSI parsing, and Unicode terminal-cell layout. Importing it

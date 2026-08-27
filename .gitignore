@@ -1,4 +1,5 @@
 # Nim compiler and documentation output
+build/
 nimcache/
 htmldocs/
 
