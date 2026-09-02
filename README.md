@@ -3,11 +3,12 @@
 [![Coverage](https://titanomachy.github.io/terminal-style/coverage.svg)](https://github.com/titanomachy/terminal-style/actions/workflows/pages.yml)
 
 TerminalStyle is a dependency-free, pure-Nim library for terminal colors,
-text attributes, ANSI parsing, and Unicode terminal-cell layout. Importing it
-does not print, query the terminal, or modify global state.
+text attributes, ANSI parsing, and Unicode terminal-cell layout. Importing it does not print, query the terminal, or modify global state.
 
 `terminal_style` is the shared styling foundation for `terminal_graphs` and
 `terminal_tables`, but can also be used independently.
+
+![Colors, attributes, indexed colors, and true-color output](docs/assets/colors-and-attributes.png)
 
 ## Platform support
 
@@ -19,19 +20,21 @@ does not print, query the terminal, or modify global state.
 
 ## Table of contents
 
-- [Platform support](#platform-support)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Quick start](#quick-start)
-- [API overview](#api-overview)
-  - [Colors and attributes](#colors-and-attributes)
-  - [Curated RGB palettes](#curated-rgb-palettes)
-  - [ANSI parsing](#ansi-parsing)
-  - [Terminal-cell layout](#terminal-cell-layout)
-- [Modules](#modules)
-- [Examples](#examples)
-- [Development and documentation](#development-and-documentation)
-- [Attribution and license](#attribution-and-license)
+- [TerminalStyle](#terminalstyle)
+  - [Platform support](#platform-support)
+  - [Requirements](#requirements)
+  - [Table of contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Quick start](#quick-start)
+  - [API overview](#api-overview)
+    - [Colors and attributes](#colors-and-attributes)
+    - [Curated RGB palettes](#curated-rgb-palettes)
+    - [ANSI parsing](#ansi-parsing)
+    - [Terminal-cell layout](#terminal-cell-layout)
+  - [Modules](#modules)
+  - [Examples](#examples)
+  - [Development and documentation](#development-and-documentation)
+  - [Attribution and license](#attribution-and-license)
 
 ## Installation
 Install the current version with Nimble:
