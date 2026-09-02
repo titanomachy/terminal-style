@@ -17,8 +17,21 @@ does not print, query the terminal, or modify global state.
 
 - Nim 2.0.0 or newer
 
-## Contents
-(table of contents soon)
+## Table of contents
+
+- [Platform support](#platform-support)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick start](#quick-start)
+- [API overview](#api-overview)
+  - [Colors and attributes](#colors-and-attributes)
+  - [Curated RGB palettes](#curated-rgb-palettes)
+  - [ANSI parsing](#ansi-parsing)
+  - [Terminal-cell layout](#terminal-cell-layout)
+- [Modules](#modules)
+- [Examples](#examples)
+- [Development and documentation](#development-and-documentation)
+- [Attribution and license](#attribution-and-license)
 
 ## Installation
 Install the current version with Nimble:
