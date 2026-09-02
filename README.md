@@ -9,9 +9,62 @@ does not print, query the terminal, or modify global state.
 `terminal_style` is the shared styling foundation for `terminal_graphs` and
 `terminal_tables`, but can also be used independently.
 
-Requires Nim 2.0.0 or newer.
+## Platform support
 
-## Colors and attributes
+`terminal_style` has been tested on **Linux** and **Windows**. On Windows I tested with the Terminal app which comes with Windows, other terminals may or may not work. It should also work on **macOS** through its standard POSIX terminal and ANSI/VT support, but macOS has not yet been tested directly.
+
+## Requirements
+
+- Nim 2.0.0 or newer
+
+## Contents
+(table of contents soon)
+
+## Installation
+Install the current version with Nimble:
+
+```shell
+nimble install terminal_style
+```
+
+Or if you prefer directly via Github:
+
+```shell
+nimble install https://github.com/titanomachy/terminal-style
+```
+
+Then import the complete core API:
+
+```nim
+import terminal_style
+```
+
+## Quick start
+
+A very simple example that styles text:
+
+```nim
+import terminal_style
+
+echo red("standard red")
+echo bgBlue(white(" white on blue "))
+echo brightGreen(bold("bright green in bold"))
+```
+
+## API overview
+
+| API family | Main API | Highlights |
+| --- | --- | --- |
+| [Colors and attributes](#colors-and-attributes) | `TerminalColor`, `TerminalStyle`, `initTerminalStyle`, `styled`, `foreground`, `background`, color and attribute helpers | Standard and bright ANSI colors, ANSI-256, RGB, hex colors, composable text attributes, nested-style restoration, and optional ANSI-free output |
+| [Curated RGB palettes](#curated-rgb-palettes) | `TerminalPalette`, `initTerminalPalette`, `ansiPalette`, `defaultDarkPalette`, `defaultLightPalette` | Immutable ANSI-16-compatible palettes, exact dark- and light-background RGB presets, and custom palette construction |
+| [ANSI parsing](#ansi-parsing) | `AnsiToken`, `AnsiTokenKind`, `tokenizeAnsi`, `stripAnsi`, `composeAnsi` | Lossless CSI, OSC, and escape tokenization; safe malformed-input handling; OSC-8 hyperlinks; stripping; and nested SGR composition |
+| [Terminal-cell layout](#terminal-cell-layout) | `displayWidth`, `sliceAnsi`, `truncateAnsi`, `padAnsi`, `wrapAnsi` | ANSI-aware measurement and layout, Unicode grapheme safety, wide characters, emoji, alignment, word or character wrapping, and retained styles and hyperlinks |
+
+Most applications should import `terminal_style`. Import
+`terminal_style/palettes` when using the opt-in palette types and presets. All
+rendering is string-based and side-effect free.
+
+### Colors and attributes
 
 Import the façade to access the complete core API:
 
@@ -48,7 +101,7 @@ let decorated = bold("outer ", red("inner"), " outer")
 echo applyStyle(decorated, heading, enabled = false)
 ```
 
-## Curated RGB palettes
+### Curated RGB palettes
 
 Import the opt-in palettes module when you want a coherent set of exact color
 choices instead of selecting individual RGB shades:
@@ -74,7 +127,7 @@ or change helpers such as `red()`.
 See the [color palette guide](docs/color-palettes.md) for exact values,
 contrast context, custom palettes, and guidance on choosing a preset.
 
-## ANSI parsing
+### ANSI parsing
 
 `tokenizeAnsi` losslessly separates plain text, CSI controls, OSC controls, and
 two-byte escape sequences. Only complete sequences are treated as controls.
@@ -91,7 +144,7 @@ for token in tokenizeAnsi(link):
 
 OSC-8 hyperlinks terminated by BEL or ST are recognized.
 
-## Terminal-cell layout
+### Terminal-cell layout
 
 `displayWidth` measures cells rather than bytes or Unicode code points. It
 handles combining marks, East Asian wide characters, variation selectors,
@@ -145,7 +198,7 @@ two-cell interpretation for emoji.
 Most applications should import only `terminal_style`; import
 `terminal_style/palettes` when using palette presets.
 
-## Example
+## Examples
 
 The finite showcase can be compiled directly while developing:
 
@@ -153,7 +206,7 @@ The finite showcase can be compiled directly while developing:
 nim c -r examples/terminal_style.nim
 ```
 
-## Development
+## Development and documentation
 
 ```sh
 nimble test
@@ -168,3 +221,9 @@ The example coverage audit is in [`docs/public-api.md`](docs/public-api.md).
 Release history, contribution rules, third-party declarations, and the release
 procedure live in `CHANGELOG.md`, `CONTRIBUTING.md`,
 `THIRD_PARTY_NOTICES.md`, and `RELEASING.md`.
+
+## Attribution and license
+`terminal_style` contains original Nim code and incorporates no third-party
+source code. It uses only the Nim standard library.
+
+`terminal_style` is released under the [MIT License](https://github.com/titanomachy/terminal-style/blob/master/LICENSE).
