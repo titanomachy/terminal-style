@@ -7,6 +7,7 @@ htmldocs/
 /tests/test_terminal_style
 /tests/test_palettes
 /examples/terminal_style
+/examples/full_showcase
 
 # Other
 RELEASING.md

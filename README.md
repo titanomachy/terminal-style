@@ -8,7 +8,7 @@ text attributes, ANSI parsing, and Unicode terminal-cell layout. Importing it do
 `terminal_style` is the shared styling foundation for `terminal_graphs` and
 `terminal_tables`, but can also be used independently.
 
-![Colors, attributes, indexed colors, and true-color output](docs/assets/colors-and-attributes.png)
+![TerminalStyle showcase](docs/assets/full-showcase.png)
 
 ## Platform support
 
