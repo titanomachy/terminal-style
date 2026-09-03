@@ -205,7 +205,7 @@ when isMainModule:
     "\"界\": " & cyan($displayWidth("界") & "c") & dim("(3b) ") &
     "\"💯\": " & cyan($displayWidth("💯") & "c") & dim("(6b) ") &
     "\"🇳🇱\": " & cyan($displayWidth("🇳🇱") & "c") & dim("(8b) ") &
-    "\"🚀\": " & cyan($displayWidth("🚀") & "c") & dim("(4b)")
+    "\"🚘\": " & cyan($displayWidth("🚘") & "c") & dim("(4b)")
   echo boxLine(wRow)
 
   # Cell-aware slicing & truncation without splitting graphemes or leaking ANSI
