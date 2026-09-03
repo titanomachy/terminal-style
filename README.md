@@ -5,7 +5,7 @@
 TerminalStyle is a dependency-free, pure-Nim library for terminal colors,
 text attributes, ANSI parsing, and Unicode terminal-cell layout. Importing it does not print, query the terminal, or modify global state.
 
-`terminal_style` is the shared styling foundation for [`terminal_graph`](https://github.com/titanomachy/terminal-graph) and [`terminal_table`](https://github.com/titanomachy/terminal-table), but can also be used independently.
+`terminal_style` is the shared styling foundation for `terminal_graph`[↗](https://github.com/titanomachy/terminal-graph) and `terminal_table`[↗](https://github.com/titanomachy/terminal-table), but can also be used independently.
 
 ![TerminalStyle showcase](docs/assets/full-showcase.png)
 
