@@ -237,12 +237,10 @@ proc updateState(state: var AnsiState; raw: string) =
     else:
       discard
 
-proc renderRange(items: seq[StyledUnit]; first, afterLast: int): string =
+proc renderRange(items: seq[StyledUnit]; first, afterLast: int;
+                 state: var AnsiState): string =
   if first >= afterLast:
     return ""
-  var state: AnsiState
-  for index in 0 ..< first:
-    state.updateState(items[index].raw)
   let hadPrefix = state.sgr.len > 0
   if hadPrefix:
     result.add state.sgr
@@ -291,7 +289,10 @@ proc sliceAnsi*(value: string; startCell, maxWidth: int): string =
       afterLast = index + 1
     position = itemEnd
   if first >= 0:
-    result = renderRange(parsed.items, first, afterLast)
+    var state: AnsiState
+    for index in 0 ..< first:
+      state.updateState(parsed.items[index].raw)
+    result = renderRange(parsed.items, first, afterLast, state)
 
 proc truncateAnsi*(value: string; maxWidth: int; suffix = "…"): string =
   ## Truncates a single display line and appends ``suffix`` when needed.
@@ -334,6 +335,17 @@ proc wrapAnsi*(value: string; width: int;
   let parsed = units(value)
   var lineStart = 0
   var lines: seq[string]
+  var state: AnsiState
+  var stateIndex = 0
+
+  proc renderLine(first, afterLast: int): string =
+    # Process skipped whitespace and newlines, then resume from the previous
+    # line's source state. Resets added to the output do not change that state.
+    while stateIndex < first:
+      state.updateState(parsed.items[stateIndex].raw)
+      inc stateIndex
+    result = renderRange(parsed.items, first, afterLast, state)
+    stateIndex = afterLast
 
   proc wrapLine(first, afterLast: int) =
     if first == afterLast:
@@ -361,10 +373,10 @@ proc wrapAnsi*(value: string; width: int;
         if used >= width:
           break
       if index < afterLast and mode == wrapWords and lastSpace >= start:
-        lines.add renderRange(parsed.items, start, lastSpace)
+        lines.add renderLine(start, lastSpace)
         start = lastSpace + 1
       else:
-        lines.add renderRange(parsed.items, start, index)
+        lines.add renderLine(start, index)
         start = index
     if lines.len == previousLineCount:
       lines.add ""

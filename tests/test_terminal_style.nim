@@ -1,4 +1,4 @@
-import std/[sequtils, strutils, unittest]
+import std/[sequtils, strutils, times, unittest]
 
 import terminal_style
 
@@ -140,6 +140,31 @@ suite "terminal cell layout":
     check characters == @["A界", "BC"]
     check wrapAnsi("one\ntwo", 8) == @["one", "two"]
     check wrapAnsi("   ", 3) == @[""]
+
+  test "preserves styles and hyperlinks across discarded whitespace and newlines":
+    let link = "\e]8;;https://example.com\e\\"
+    let closeLink = "\e]8;;\e\\"
+    let value = termBold & "ab" & termClear & " " & termRed & "\n\n" &
+      link & "cd ef" & closeLink & termClear
+    check wrapAnsi(value, 2) == @[
+      termBold & "ab" & termClear,
+      "",
+      termRed & link & "cd" & closeLink & termClear,
+      termRed & link & "ef" & closeLink & termClear
+    ]
+
+  test "wraps large multiline input without repeatedly scanning its prefix":
+    const lineCount = 8000
+    let text = repeat("abcdefghijklmnopqrst\n", lineCount)
+    let started = cpuTime()
+    let lines = wrapAnsi(text, 80)
+    let elapsed = cpuTime() - started
+    check lines.len == lineCount + 1
+    check lines[0 ..< lineCount].allIt(it == "abcdefghijklmnopqrst")
+    check lines[^1] == ""
+    # The former quadratic scan took about 14 seconds in a release build.
+    # Leave ample headroom for slower CI runners and coverage builds.
+    check elapsed < 5.0
 
   test "validates layout dimensions":
     expect ValueError:
