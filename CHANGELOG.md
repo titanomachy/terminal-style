@@ -4,6 +4,8 @@ This project follows Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-10-10
+
 ### Fixed
 
 - Preserve RGB colors with zero components and indexed color `0` during nested
@@ -14,6 +16,16 @@ This project follows Semantic Versioning.
   across discarded whitespace and explicit newlines.
 - Count Thai and Lao spacing vowels and letters as visible terminal cells,
   while keeping their nonspacing marks attached to the base character.
+
+### Added
+
+- Add regression coverage for nested and sliced colors, combined SGR resets,
+  Thai and Lao text layout, and large multiline wrapping.
+
+### Changed
+
+- Expand the README, API documentation, contribution guide, and finite example
+  to cover the corrected color and Unicode behavior.
 
 ## [0.1.1] - 2026-08-24
 
