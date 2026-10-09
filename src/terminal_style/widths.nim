@@ -40,6 +40,7 @@ proc inRange(value, first, last: int): bool {.inline.} =
 
 proc isCombining(value: int): bool =
   # Includes combining scripts, variation selectors, and emoji modifiers.
+  # Thai and Lao mark ranges exclude spacing vowels and letters.
   result =
     value.inRange(0x0300, 0x036f) or value.inRange(0x0483, 0x0489) or
     value.inRange(0x0591, 0x05bd) or value == 0x05bf or
@@ -66,7 +67,9 @@ proc isCombining(value: int): bool =
     value.inRange(0x0d00, 0x0d03) or value.inRange(0x0d3b, 0x0d4d) or
     value == 0x0d57 or value.inRange(0x0d62, 0x0d63) or
     value.inRange(0x0d81, 0x0d83) or value.inRange(0x0dca, 0x0df3) or
-    value.inRange(0x0e31, 0x0e4e) or value.inRange(0x0eb1, 0x0ecd) or
+    value == 0x0e31 or value.inRange(0x0e34, 0x0e3a) or
+    value.inRange(0x0e47, 0x0e4e) or value == 0x0eb1 or
+    value.inRange(0x0eb4, 0x0ebc) or value.inRange(0x0ec8, 0x0ece) or
     value.inRange(0x0f18, 0x0f19) or value.inRange(0x0f35, 0x0f39) or
     value.inRange(0x0f71, 0x0f84) or value.inRange(0x0f86, 0x0f87) or
     value.inRange(0x0f8d, 0x0fbc) or value.inRange(0x102b, 0x103e) or

@@ -88,6 +88,33 @@ suite "terminal cell layout":
     check displayWidth("🇳🇱") == 2
     check displayWidth("short\n界界界") == 6
 
+  test "counts visible Thai and Lao characters as terminal cells":
+    for value in ["า", "ำ", "฿", "เ", "แ", "โ", "ใ", "ไ", "ๅ", "ๆ",
+        "າ", "ຳ", "ຽ", "ເ", "ແ", "ໂ", "ໃ", "ໄ", "ໆ"]:
+      check displayWidth(value) == 1
+      check sliceAnsi(value, 0, 1) == value
+    check displayWidth("ภาษาไทย") == 7
+    check displayWidth("ພາສາລາວ") == 7
+
+  test "lays out Thai and Lao text by visible cells":
+    for value in ["ภาษาไทย", "ພາສາລາວ"]:
+      check padAnsi(value, 7) == value
+      check padAnsi(value, 10) == value & "   "
+    check sliceAnsi(bold("ภาษาไทย"), 0, 2) == bold("ภา")
+    check sliceAnsi("ພາສາລາວ", 0, 2) == "ພາ"
+    check truncateAnsi("ภาษาไทย", 5) == "ภาษา…"
+    check truncateAnsi("ພາສາລາວ", 5) == "ພາສາ…"
+    check wrapAnsi("ภาษาไทย", 3, wrapCharacters) == @["ภาษ", "าไท", "ย"]
+    check wrapAnsi("ພາສາລາວ", 3, wrapCharacters) == @["ພາສ", "າລາ", "ວ"]
+
+  test "keeps Thai and Lao combining marks with their base characters":
+    for clusters in [["กิ้", "ขั"], ["ກິ້", "ຂັ"], ["ກ\u0ece", "ຂ\u0eba"]]:
+      let value = clusters.join()
+      check displayWidth(value) == 2
+      check sliceAnsi(value, 0, 1) == clusters[0]
+      check sliceAnsi(value, 1, 1) == clusters[1]
+      check wrapAnsi(value, 1, wrapCharacters) == @clusters
+
   test "slices without splitting graphemes and restores style":
     let value = bold("A界B")
     let sliced = sliceAnsi(value, 1, 2)
