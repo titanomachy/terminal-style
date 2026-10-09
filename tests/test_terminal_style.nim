@@ -26,6 +26,20 @@ suite "ANSI parsing":
     check composeAnsi(termBold, "a\e[1;0mb") ==
       termBold & "a\e[1;0m" & termBold & "b" & termClear
 
+  test "does not interpret zero color components as nested resets":
+    for opening in ["\e[38;2;0;128;255m", "\e[38;2;255;0;128m",
+        "\e[38;2;255;128;0m", "\e[38;2;0;0;0m", "\e[38;5;0m",
+        "\e[48;2;0;0;0m", "\e[48;5;0m", "\e[1;38;2;255;0;0m"]:
+      let nested = opening & "inner" & termClear
+      check composeAnsi(termBlue, nested) ==
+        termBlue & nested & termBlue & termClear
+    check blue(rgb(255, 0, 0, "red")) ==
+      termBlue & "\e[38;2;255;0;0mred" & termClear & termBlue & termClear
+
+  test "preserves parameters following a nested reset":
+    check composeAnsi(termBlue, "\e[0;31minner") ==
+      termBlue & "\e[0;31m" & termBlue & termRed & "inner" & termClear
+
 suite "terminal colors and styles":
   test "constructs standard, indexed, RGB, and hexadecimal colors":
     check ansiCode(colorBrightRed) == termBrightRed
@@ -81,6 +95,27 @@ suite "terminal cell layout":
     check sliced.startsWith(termBold)
     check sliced.endsWith(termClear)
     check sliceAnsi(value, 2, 1) == ""
+
+  test "retains and closes colors containing zero components during layout":
+    for opening in ["\e[38;2;0;128;255m", "\e[38;2;255;0;128m",
+        "\e[38;2;255;128;0m", "\e[38;2;0;0;0m", "\e[38;5;0m",
+        "\e[48;2;0;0;0m", "\e[48;5;0m", "\e[1;38;2;255;0;0m"]:
+      let value = opening & "abcdef" & termClear
+      check sliceAnsi(value, 0, 2) == opening & "ab" & termClear
+      check sliceAnsi(value, 2, 2) == opening & "cd" & termClear
+      check truncateAnsi(value, 3) == opening & "ab" & termClear & "…"
+      check wrapAnsi(value, 2, wrapCharacters) == @[
+        opening & "ab" & termClear,
+        opening & "cd" & termClear,
+        opening & "ef" & termClear
+      ]
+
+  test "retains styles set in the same sequence as a reset":
+    let value = "\e[0;31mabcdef" & termClear
+    check sliceAnsi(value, 0, 2) == "\e[0;31mab" & termClear
+    check sliceAnsi(value, 2, 2) == termRed & "cd" & termClear
+    check sliceAnsi("\e[1;;31mabcdef" & termClear, 2, 2) ==
+      termRed & "cd" & termClear
 
   test "preserves OSC hyperlinks while slicing":
     let link = "\e]8;;https://example.com\e\\docs\e]8;;\e\\"

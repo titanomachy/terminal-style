@@ -7,6 +7,7 @@
 import std/[strutils, unicode]
 
 import ./ansi
+import ./private/sgr
 
 export ansi
 
@@ -217,10 +218,9 @@ proc updateState(state: var AnsiState; raw: string) =
     case token.kind
     of atkCsi:
       if token.value[^1] == 'm':
-        let params = token.value[2 ..< token.value.high]
-        if params.len == 0 or params == "0" or params.startsWith("0;") or
-            params.contains(";0;") or params.endsWith(";0"):
-          state.sgr.setLen(0)
+        let reset = sgrResetTail(token.value)
+        if reset.hasReset:
+          state.sgr = reset.trailing
         else:
           state.sgr.add token.value
     of atkOsc:

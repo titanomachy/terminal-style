@@ -5,6 +5,8 @@
 ## or malformed escapes are returned as ordinary text instead of silently
 ## consuming the remainder of a log line.
 
+import ./private/sgr
+
 type
   AnsiTokenKind* = enum
     ## The kind of a token returned by ``tokenizeAnsi``.
@@ -113,20 +115,6 @@ proc stripAnsi*(value: string): string =
     if token.kind == atkText:
       result.add token.value
 
-proc isSgrReset(sequence: string): bool =
-  if sequence.len < 3 or sequence[^1] != 'm':
-    return false
-  let parameters = sequence[2 ..< sequence.high]
-  if parameters.len == 0:
-    return true
-  var start = 0
-  for index in 0 .. parameters.len:
-    if index == parameters.len or parameters[index] == ';':
-      let parameter = parameters[start ..< index]
-      if parameter.len == 0 or parameter == "0":
-        return true
-      start = index + 1
-
 proc composeAnsi*(opening, value: string; enabled = true): string =
   ## Wraps ``value`` in an SGR ``opening`` sequence. When nested content resets
   ## its style, the outer sequence is reapplied. With ``enabled = false`` all
@@ -139,6 +127,9 @@ proc composeAnsi*(opening, value: string; enabled = true): string =
   result = opening
   for token in tokenizeAnsi(value):
     result.add token.value
-    if token.kind == atkCsi and token.value.isSgrReset:
-      result.add opening
+    if token.kind == atkCsi and token.value[^1] == 'm':
+      let reset = sgrResetTail(token.value)
+      if reset.hasReset:
+        result.add opening
+        result.add reset.trailing
   result.add ansiReset
