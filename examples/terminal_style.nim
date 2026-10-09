@@ -35,11 +35,14 @@ when isMainModule:
   let nested = bold("outer bold, ", magenta("nested magenta"),
     ", bold restored")
   echo nested
+  echo blue("outer blue, ", rgb(255, 0, 0, "inner RGB red"), ", blue restored")
   echo "plain/log output: ", applyStyle(nested, heading, enabled = false)
 
   echo "\nCell-aware layout"
   let sample = red("Nim 界 👨‍👩‍👧‍👦 e\u0301")
   echo "width: ", displayWidth(sample)
+  echo "Thai width: ", displayWidth("ภาษาไทย"), "  Lao width: ",
+    displayWidth("ພາສາລາວ")
   echo "slice: |", padAnsi(sliceAnsi(sample, 4, 4), 10, alignCenter), "|"
   for line in wrapAnsi(bold("styled text wraps without leaking its style"), 16):
     echo "|", padAnsi(line, 16), "|"

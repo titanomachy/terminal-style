@@ -4,6 +4,17 @@ This project follows Semantic Versioning.
 
 ## [Unreleased]
 
+### Fixed
+
+- Preserve RGB colors with zero components and indexed color `0` during nested
+  styling, slicing, truncation, and wrapping. Retain style parameters following
+  a reset in the same SGR sequence and close active output styles correctly.
+- Carry ANSI style and hyperlink state forward when wrapping, removing
+  repeated scans of earlier text on large multiline inputs. Preserve state
+  across discarded whitespace and explicit newlines.
+- Count Thai and Lao spacing vowels and letters as visible terminal cells,
+  while keeping their nonspacing marks attached to the base character.
+
 ## [0.1.1] - 2026-08-24
 
 ### Changed

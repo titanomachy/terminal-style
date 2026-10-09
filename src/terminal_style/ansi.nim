@@ -117,8 +117,10 @@ proc stripAnsi*(value: string): string =
 
 proc composeAnsi*(opening, value: string; enabled = true): string =
   ## Wraps ``value`` in an SGR ``opening`` sequence. When nested content resets
-  ## its style, the outer sequence is reapplied. With ``enabled = false`` all
-  ## complete ANSI controls in ``value`` are removed.
+  ## its style, the outer sequence is reapplied. RGB components and palette
+  ## indices retain their color meaning when zero. Style parameters following
+  ## a reset in the same SGR sequence are preserved. With ``enabled = false``
+  ## all complete ANSI controls in ``value`` are removed.
   if not enabled:
     return stripAnsi(value)
   if opening.len == 0:

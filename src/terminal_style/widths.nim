@@ -261,6 +261,8 @@ proc displayWidth*(value: string): int =
   ## Returns the width of the widest line in terminal cells. ANSI controls do
   ## not count; combining marks, variation selectors, and joiners do not add a
   ## cell; common East Asian and emoji graphemes occupy two cells.
+  ## Thai and Lao spacing vowels and letters occupy one cell each, while their
+  ## nonspacing marks stay attached to the base character.
   let parsed = units(value)
   var lineWidth = 0
   for item in parsed.items:
@@ -274,6 +276,7 @@ proc displayWidth*(value: string): int =
 proc sliceAnsi*(value: string; startCell, maxWidth: int): string =
   ## Extracts whole graphemes from the first display line while retaining ANSI
   ## style and OSC-8 hyperlink state. A wide grapheme is never split.
+  ## Active styles and hyperlinks are closed at the end of the returned text.
   if startCell < 0 or maxWidth < 0:
     raise newException(ValueError, "cell offsets and widths cannot be negative")
   if maxWidth == 0:
@@ -299,6 +302,7 @@ proc sliceAnsi*(value: string; startCell, maxWidth: int): string =
 
 proc truncateAnsi*(value: string; maxWidth: int; suffix = "…"): string =
   ## Truncates a single display line and appends ``suffix`` when needed.
+  ## When truncating, active styles and hyperlinks are closed before the suffix.
   if maxWidth < 0:
     raise newException(ValueError, "maximum width cannot be negative")
   if displayWidth(value) <= maxWidth:
@@ -332,7 +336,9 @@ proc wrapAnsi*(value: string; width: int;
                mode = wrapWords): seq[string] =
   ## Wraps styled text to ``width`` cells. Explicit newlines are honored and
   ## active SGR and OSC-8 hyperlink state is restored on each produced line.
-  ## Whitespace at a word-wrap boundary is omitted.
+  ## Whitespace at a word-wrap boundary is omitted. ANSI state is carried
+  ## forward across skipped whitespace and newlines without rescanning earlier
+  ## lines. Produced lines close their active styles and hyperlinks.
   if width <= 0:
     raise newException(ValueError, "wrap width must be positive")
   let parsed = units(value)

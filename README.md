@@ -107,9 +107,16 @@ let heading = initTerminalStyle(
 echo styled(heading, "Terminal output")
 ```
 
-Nested helpers restore the outer style after an inner reset. To produce plain
-logs or redirected output, pass `enabled = false`; existing complete ANSI
-controls are removed too:
+Nested helpers preserve inner RGB and indexed colors, including zero color
+components and palette index `0`, and restore the outer style after an inner
+reset:
+
+```nim
+echo blue("outer blue, ", rgb(255, 0, 0, "inner red"), ", blue restored")
+```
+
+To produce plain logs or redirected output, pass `enabled = false`; existing
+complete ANSI controls are removed too:
 
 ```nim
 let decorated = bold("outer ", red("inner"), " outer")
@@ -166,10 +173,15 @@ handles combining marks, East Asian wide characters, variation selectors,
 emoji modifiers, regional-indicator flags, and emoji joined with ZWJ. For
 multiline strings it returns the widest line.
 
+Thai and Lao spacing vowels and letters each occupy one cell; combining marks
+stay attached to their base character without adding cells.
+
 ```nim
 doAssert displayWidth("e\u0301") == 1
 doAssert displayWidth("界") == 2
 doAssert displayWidth("👨‍👩‍👧‍👦") == 2
+doAssert displayWidth("ภาษาไทย") == 7
+doAssert displayWidth("ພາສາລາວ") == 7
 ```
 
 Layout helpers retain active SGR styles and OSC-8 hyperlinks and never split a
@@ -190,7 +202,9 @@ for line in wrapAnsi(value, 10, wrapWords):
 
 `sliceAnsi`, `truncateAnsi`, and `padAnsi` operate on one display line.
 `wrapAnsi` honors explicit newlines and supports `wrapWords` and
-`wrapCharacters`. Widths and offsets are validated early.
+`wrapCharacters`. Each produced line closes active styles and hyperlinks;
+wrapping carries their state forward across skipped whitespace and newlines.
+Widths and offsets are validated early.
 
 Terminal width conventions differ for a small number of ambiguous Unicode
 characters and can be configured by individual terminal emulators. This
@@ -224,6 +238,7 @@ nim c -r examples/terminal_style.nim
 ## Development and documentation
 
 ```sh
+nimble check
 nimble test
 nimble examples
 nimble docs
@@ -233,9 +248,9 @@ The generated [API documentation](https://titanomachy.github.io/terminal-style/)
 is published by GitHub Actions after every push to `master`.
 
 The example coverage audit is in [`docs/public-api.md`](docs/public-api.md).
-Release history, contribution rules, third-party declarations, and the release
-procedure live in `CHANGELOG.md`, `CONTRIBUTING.md`,
-`THIRD_PARTY_NOTICES.md`, and `RELEASING.md`.
+Release history, contribution rules, and third-party declarations live in
+[`CHANGELOG.md`](CHANGELOG.md), [`CONTRIBUTING.md`](CONTRIBUTING.md), and
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 ## Attribution and license
 `terminal_style` contains original Nim code and incorporates no third-party
