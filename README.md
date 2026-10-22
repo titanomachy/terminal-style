@@ -9,6 +9,11 @@ text attributes, ANSI parsing, and Unicode terminal-cell layout. Importing it do
 
 ![TerminalStyle showcase](docs/assets/full-showcase.png)
 
+Run this example with:
+```
+nim r --path:src examples/full_showcase.nim
+```
+
 ## Platform support
 
 `terminal_style` has been tested on **Linux** and **Windows**. On Windows I tested with the Terminal app which comes with Windows, other terminals may or may not work. It should also work on **macOS** through its standard POSIX terminal and ANSI/VT support, but macOS has not yet been tested directly.
@@ -17,11 +22,18 @@ text attributes, ANSI parsing, and Unicode terminal-cell layout. Importing it do
 
 - Nim 2.0.0 or newer
 
+## TerminalDeck
+
+TerminalStyle is the foundation library for styling and text formatting in [TerminalDeck](https://github.com/titanomachy/terminal-deck):
+
+![TerminalDeck ecosystem: Foundations, Output components, and Interaction.](docs/diagrams/terminal-deck.svg)
+
 ## Table of contents
 
 - [TerminalStyle](#terminalstyle)
   - [Platform support](#platform-support)
   - [Requirements](#requirements)
+  - [TerminalDeck](#terminaldeck)
   - [Table of contents](#table-of-contents)
   - [Installation](#installation)
   - [Quick start](#quick-start)
@@ -232,7 +244,7 @@ Most applications should import only `terminal_style`; import
 The finite showcase can be compiled directly while developing:
 
 ```sh
-nim c -r examples/terminal_style.nim
+nim r --path:src examples/terminal_style.nim
 ```
 
 ## Development and documentation

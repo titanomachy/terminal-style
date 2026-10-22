@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="548" viewBox="0 0 1080 548" role="img" aria-labelledby="title description">
+  <title id="title">TerminalDeck ecosystem</title>
+  <desc id="description">TerminalDeck groups its libraries into Foundations, Output components, and Interaction. Foundations contains TerminalStyle and TerminalScreen. Output components contains TerminalStatus, TerminalTable, TerminalLayout, and TerminalGraph. Interaction contains TerminalPrompt and TerminalWidgets. TerminalLayout uses TerminalScreen.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1 7 4 1 7" fill="none" stroke="#94a3b8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
+      .deck { fill: #fff1c2; stroke: #e8cd78; stroke-width: 3; }
+      .deck-ink { fill: #6b5416; }
+      .connector { fill: none; stroke: #94a3b8; stroke-width: 1.5; }
+      .card { fill: #fff; stroke-width: 1; }
+      .name { font-size: 16px; font-weight: 650; }
+      .detail { fill: #475569; font-size: 12px; }
+      .note { fill: #64748b; font-size: 11px; }
+      .heading { font-size: 18px; font-weight: 650; }
+      .foundation-panel { fill: #eff6ff; stroke: #bfdbfe; }
+      .foundation-card { stroke: #bfdbfe; }
+      .foundation-ink { fill: #172554; }
+      .output-panel { fill: #f0fdf4; stroke: #bbf7d0; }
+      .output-card { stroke: #bbf7d0; }
+      .output-ink { fill: #14532d; }
+      .interaction-panel { fill: #fff5f5; stroke: #fecaca; }
+      .interaction-card { stroke: #fecaca; }
+      .interaction-ink { fill: #7f1d1d; }
+      @media (prefers-color-scheme: dark) {
+        .deck { fill: #302817; stroke: #766033; }
+        .deck-ink { fill: #ffe5a1; }
+        .card { fill: #161b22; }
+        .detail { fill: #c1cbd7; }
+        .note { fill: #a2afbf; }
+        .foundation-panel { fill: #111e30; stroke: #34537c; }
+        .foundation-card { stroke: #34537c; }
+        .foundation-ink { fill: #bfdbfe; }
+        .output-panel { fill: #11251b; stroke: #315c43; }
+        .output-card { stroke: #315c43; }
+        .output-ink { fill: #bbf7d0; }
+        .interaction-panel { fill: #2a191c; stroke: #704044; }
+        .interaction-card { stroke: #704044; }
+        .interaction-ink { fill: #fecaca; }
+      }
+    </style>
+  </defs>
+
+  <!-- Shared heading and quiet, evenly spaced branches. -->
+  <rect class="deck" x="406" y="24" width="268" height="78" rx="39"/>
+  <text class="deck-ink" x="540" y="57" text-anchor="middle" font-size="23" font-weight="700">TerminalDeck</text>
+  <text class="deck-ink" x="540" y="80" text-anchor="middle" font-size="13">Nim Terminal Ecosystem</text>
+  <path class="connector" d="M540 102 V130 M160 165 V146 Q160 130 176 130 H904 Q920 130 920 146 V165 M540 130 V165"/>
+  <circle cx="540" cy="130" r="3" fill="#94a3b8"/>
+
+  <!-- Foundations -->
+  <rect class="foundation-panel" x="20" y="166" width="280" height="296" rx="16"/>
+  <circle cx="45" cy="198" r="4" fill="#3b82f6"/>
+  <text class="heading foundation-ink" x="58" y="204">Foundations</text>
+  <text class="detail" x="40" y="226">Styling &amp; terminal access</text>
+
+  <rect class="card foundation-card" x="38" y="246" width="244" height="88" rx="10"/>
+  <text class="name foundation-ink" x="54" y="273">TerminalStyle</text>
+  <text class="detail" x="54" y="295">Styling &amp; text formatting</text>
+  <text class="note" x="54" y="314">ANSI · Colors · TrueColor</text>
+
+  <rect class="card foundation-card" x="38" y="350" width="244" height="88" rx="10"/>
+  <text class="name foundation-ink" x="54" y="377">TerminalScreen</text>
+  <text class="detail" x="54" y="399">Alternate screen · Raw mode</text>
+  <text class="note" x="54" y="418">Cursor control · Terminal geometry</text>
+
+  <!-- Output components: a compact two-by-two grid. -->
+  <rect class="output-panel" x="320" y="166" width="440" height="296" rx="16"/>
+  <circle cx="345" cy="198" r="4" fill="#22a559"/>
+  <text class="heading output-ink" x="358" y="204">Output components</text>
+  <text class="detail" x="340" y="226">Layout, status &amp; visual data</text>
+
+  <rect class="card output-card" x="338" y="246" width="196" height="88" rx="10"/>
+  <text class="name output-ink" x="354" y="273">TerminalStatus</text>
+  <text class="detail" x="354" y="295">Status &amp; progress</text>
+  <text class="note" x="354" y="314">Spinners · Progress bars</text>
+
+  <rect class="card output-card" x="546" y="246" width="196" height="88" rx="10"/>
+  <text class="name output-ink" x="562" y="273">TerminalTable</text>
+  <text class="detail" x="562" y="295">Tabular data</text>
+
+  <rect class="card output-card" x="338" y="350" width="196" height="88" rx="10"/>
+  <text class="name output-ink" x="354" y="377">TerminalLayout</text>
+  <text class="detail" x="354" y="399">Structure &amp; layout</text>
+  <text class="note" x="354" y="418">Trees · Panels · Callouts</text>
+
+  <rect class="card output-card" x="546" y="350" width="196" height="88" rx="10"/>
+  <text class="name output-ink" x="562" y="377">TerminalGraph</text>
+  <text class="detail" x="562" y="399">Visual data</text>
+  <text class="note" x="562" y="418">Charts · Sparklines</text>
+
+  <!-- Interaction -->
+  <rect class="interaction-panel" x="780" y="166" width="280" height="296" rx="16"/>
+  <circle cx="805" cy="198" r="4" fill="#d65f5f"/>
+  <text class="heading interaction-ink" x="818" y="204">Interaction</text>
+  <text class="detail" x="800" y="226">Prompts &amp; interactive controls</text>
+
+  <rect class="card interaction-card" x="798" y="246" width="244" height="88" rx="10"/>
+  <text class="name interaction-ink" x="814" y="273">TerminalPrompt</text>
+  <text class="detail" x="814" y="295">Prompts</text>
+
+  <rect class="card interaction-card" x="798" y="350" width="244" height="88" rx="10"/>
+  <text class="name interaction-ink" x="814" y="377">TerminalWidgets</text>
+  <text class="detail" x="814" y="399">Tabs &amp; interactive widgets</text>
+
+  <!-- Keep the cross-library dependency outside the cards. -->
+  <path class="connector" d="M436 438 V478 Q436 494 420 494 H176 Q160 494 160 478 V440" stroke-dasharray="4 5" marker-end="url(#arrow)"/>
+  <text class="note" x="298" y="522" text-anchor="middle">TerminalLayout uses TerminalScreen</text>
+</svg>
