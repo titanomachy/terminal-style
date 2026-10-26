@@ -7,7 +7,7 @@ text attributes, ANSI parsing, and Unicode terminal-cell layout. Importing it do
 
 `terminal_style` is the shared styling foundation for `terminal_graph`[↗](https://github.com/titanomachy/terminal-graph) and `terminal_table`[↗](https://github.com/titanomachy/terminal-table), but can also be used independently.
 
-![TerminalStyle showcase](docs/assets/full-showcase.png)
+<img src="docs/assets/full-showcase.png" width="693px" alt="TerminalStyle showcase"/>
 
 Run this example with:
 ```
